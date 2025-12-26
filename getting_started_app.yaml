@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: gettingstarted-todo
+  name: gettingstarted-todo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: gettingstarted-todo
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: gettingstarted-todo
+    spec:
+      volumes:
+      - name: gettingstarted-secrets-app-vol
+        secret:
+          secretName: gettingstarted-secrets-app
+      - name: gettingstarted-configvals-app-vol
+        configMap:
+          name: gettingstarted-configvals-app    
+      containers:
+      - image: getstartedapp:0.0.1
+        name: getstartedapp
+        ports:
+        - containerPort: 80
+          name: http-todo
+        env:
+        - name: SQLDB_HOST_NAME
+          value: "gettingstarted-sql-0.gettingstarted-sql-headless.default.svc.cluster.local"
+        - name: SQLDB_PORT
+          value: "1433" 
+        envFrom:
+          - secretRef:
+              name: gettingstarted-secrets-app
+          - configMapRef:
+              name: gettingstarted-configvals-app          
+        volumeMounts:
+          - name: gettingstarted-secrets-app-vol 
+            mountPath: /app/secrets
+            readOnly: true 
+          - name: gettingstarted-configvals-app-vol
+            mountPath: /app/config
+            readOnly: true   
+        resources: {}  
+status: {}      
