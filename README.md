@@ -1,2 +1,0 @@
-# Kubernetes_app_infrastructure_deployment_statefulset
-# Deployment_statefulset_todo_app
