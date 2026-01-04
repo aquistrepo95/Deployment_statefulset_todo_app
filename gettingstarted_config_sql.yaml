@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: gettingstarted-configvals-sql
+  namespace: default
+data:
+  #initdb_sql = "initdb.sql"
+
+  initdb.sql: |
+    CREATE DATABASE IF NOT EXISTS todos;
+    FLUSH PRIVILEGES;	

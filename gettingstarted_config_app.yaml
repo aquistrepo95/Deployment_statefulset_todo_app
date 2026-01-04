@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: gettingstarted-configvals-app
+data:
+  MYSQL_DB: "todos"
+  MYSQL_HOST: "gettingstarted-sql-0.gettingstarted-sql-headless.default.svc.cluster.local"

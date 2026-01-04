@@ -1,0 +1,74 @@
+# This YAML file defines a Kubernetes Deployment for the "gettingstarted-todo" application.
+# The deployment consists of a single replica of the application container, which is based on the image "aquist9595/getstartedapp:0.0.1".
+# The application listens on port 3000 and retrieves its configuration from both a Secret and a ConfigMap.
+# The Secret named "gettingstarted-secrets-app" provides sensitive information such as database credentials,
+# while the ConfigMap named "gettingstarted-configvals-app" supplies non-sensitive configuration values.
+# The deployment also mounts these resources as volumes within the container for easy access.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: gettingstarted-todo
+  name: gettingstarted-todo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: gettingstarted-todo
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: gettingstarted-todo
+    spec:
+      volumes:
+      - name: gettingstarted-secrets-app-vol
+        secret:
+          secretName: gettingstarted-secrets-app 
+      - name: gettingstarted-config-app-vol
+        configMap:
+          name: gettingstarted-configvals-app      
+      containers:
+      - image: aquist9595/getstartedapp:0.0.1
+        name: getstartedapp
+        ports:
+        - containerPort: 3000
+        env:
+        - name: SQL_HOST
+          value: "mysql"
+        envFrom:
+        - secretRef:
+            name: gettingstarted-secrets-app
+        - configMapRef:
+            name: gettingstarted-configvals-app 
+#==============================================================================================================================================================
+# The following commented-out section shows an alternative way to set environment variables individually from ConfigMaps and Secrets.             
+        #- name: MYSQL_DB
+         # valueFrom:
+           # configMapKeyRef:
+            #  name: gettingstarted-configvals-app
+            #  key: MYSQL_DB
+        #- name: MYSQL_HOST
+          #valueFrom:
+            #configMapKeyRef:
+              #name: gettingstarted-configvals-app
+              #key: MYSQL_HOST                   
+        #- name: MYSQL_USER     
+          #valueFrom:
+            #secretKeyRef:
+             # name: gettingstarted-secrets-app
+             # key: MYSQL_USER
+        #- name: MYSQL_PASSWORD
+         # valueFrom:
+            #secretKeyRef:
+             # name: gettingstarted-secrets-app
+              #key: MYSQL_PASSWORD
+        volumeMounts:
+          - name: gettingstarted-secrets-app-vol 
+            mountPath: /app/secrets
+            readOnly: true 
+          - name: gettingstarted-config-app-vol
+            mountPath: /app/config
+            readOnly: true  
+        resources: {}  
+status: {}      
