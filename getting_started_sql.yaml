@@ -4,6 +4,20 @@
 # The database container uses an image named 'getstartedappsql:0.0.1' and exposes port 1433. This image was built locally using a Dockerfile from a mysql base image.
 # Make sure to create the necessary Secret and ConfigMap resources referenced in the volume mounts before deploying this StatefulSet.
 # The configmap provides an initial database setup script to create a database called todos NB: this could be expanded on to create tables and other database elements.
+apiVersion: v1
+kind: Service
+metadata:
+  name: gettingstarted-sql-headless
+spec:
+  clusterIP: None
+  selector:
+    app: gettingstarted-sqldb
+  ports:
+  - name: mysql-headless-svc-port
+    protocol: TCP
+    port: 80
+    targetPort: 3306
+---
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:

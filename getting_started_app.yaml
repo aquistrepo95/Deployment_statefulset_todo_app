@@ -4,6 +4,20 @@
 # The Secret named "gettingstarted-secrets-app" provides sensitive information such as database credentials,
 # while the ConfigMap named "gettingstarted-configvals-app" supplies non-sensitive configuration values.
 # The deployment also mounts these resources as volumes within the container for easy access.
+apiVersion: v1
+kind: Service
+metadata:
+  name: gettingstarted-app-svc
+spec:
+  selector:
+    app: gettingstarted-todo
+  type: NodePort
+  ports:
+  - name: gettingstarted-app-port-90
+    protocol: TCP
+    port: 90
+    targetPort: 3000
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
