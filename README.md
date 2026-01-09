@@ -97,4 +97,26 @@
     service/gettingstarted-app-svc        NodePort    10.100.118.81    <none>        90:32724/TCP     9d
     service/gettingstarted-sql-headless   ClusterIP   None             <none>        80/TCP           9d
   ```
+## Verify the Stateless and Stateful applications are running, and your services are routing traffic to them successfully
+```
+% minikube service gettingstarted-app-svc
+```
+* If all components were set up correctly, your default browser should open the application.
+* Add items to the empty bar and save by pressing the enter/return key.
   
+## Verify database persistence: 
+* Verify database persistence by running the following commands and queries:
+  ```
+  % kubectl exec -it pod/gettingstarted-sql-0 -- /bin/bash
+  bash-5.1# mysql -u root -p
+  bash-5.1# <enter secret password>
+  mysql> USE todos;
+  mysql> SELECT * FROM todo_items;
+  +--------------------------------------+----------+-----------+
+  | id                                   | name     | completed |
+  +--------------------------------------+----------+-----------+
+  | 9be82e5e-b7cf-4d99-bddb-4ed16f7dca1f | cool     |         0 |
+  | 3e21f830-5d3d-453c-81f9-e353874c2c10 | door     |         0 |
+  | 5cb4fb8f-1412-4791-85b9-0987fef80d2c | New York |         0 |
+  +--------------------------------------+----------+-----------+
+  ```
