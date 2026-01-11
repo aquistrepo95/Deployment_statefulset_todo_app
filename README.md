@@ -8,14 +8,14 @@
 * Static storage creation using hostpath volumes NB: It is recommended to use Local volumes for more durability OR dynamic storage through storage classes for better provisioning.
 * Persistent volumes and Persistent Volume claims for replicas (in this project for the mysql:8.0 replica)
 * Config-maps to provide configuration information to both replicas i.e Deployment and Statefulset
-* Secret to provide sensitive information to Statefulset replica.
+* Secret to provide sensitive information to Statefulset and Deployment replicas.
 * Headless service to route traffic to the Statefulset replica using the FQDN.
 * Nodeport service to route traffic to the Deployment replica using a port on the Node, with clusterIp.
 
 ## Built with:
 ### Stateless Application:
  *  Javascript
-### Stateless Application:
+### Stateful Application:
  * mysql:8.0
 ### Kubernetes
  * minikube
@@ -39,6 +39,8 @@
 * Apply Persistent Volume - open another terminal, navigate to the directory you cloned this repo into and type the following commands:
   ```
    % kubectl apply -f persistent_vol.yaml
+     NAME                CAPACITY   ACCESS MODES   RECLAIM POLICY   STATUS      CLAIM                     STORAGECLASS   VOLUMEATTRIBUTESCLASS   REASON   AGE
+     gettingstarted-pv   5Gi        RWO            Delete           Available                             <unset>                                         10d
   ```
 * Apply Config-maps and secrets:
   ```
