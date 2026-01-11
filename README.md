@@ -24,7 +24,7 @@
 
 ## This section will describe how to get the project running on your local machine.
 * Download prebuilt Docker image from Docker Hub by running:
-* Switch the Docker for terminal to use the minikube Docker daemon, pull the Docker Image, and switch back to your local Docker daemon 
+* Switch the Docker daemon to use the minikube Docker daemon, pull the Docker Image, and switch back to your local Docker daemon 
   ```
    % eval $(minikube docker-env)
    % docker pull aquist9595/getstartedapp:0.0.1
