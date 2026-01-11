@@ -39,6 +39,7 @@
 * Apply Persistent Volume - open another terminal, navigate to the directory you cloned this repo into and type the following commands:
   ```
    % kubectl apply -f persistent_vol.yaml
+   % kubectl get pv
      NAME                CAPACITY   ACCESS MODES   RECLAIM POLICY   STATUS      CLAIM                     STORAGECLASS   VOLUMEATTRIBUTESCLASS   REASON   AGE
      gettingstarted-pv   5Gi        RWO            Delete           Available                             <unset>                                         10d
   ```
