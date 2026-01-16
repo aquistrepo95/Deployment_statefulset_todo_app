@@ -1,0 +1,22 @@
+# This Horizontal Pod Autoscaler (HPA) automatically scales the number of pods
+# in the "gettingstarted-todo" Deployment based on CPU utilization.
+# It maintains a minimum of 1 replica and can scale up to a maximum of 3 replicas.
+# The target CPU utilization for scaling is set to 50%.
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: gettingstarted-todo-hpa
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: gettingstarted-todo
+  minReplicas: 1
+  maxReplicas: 3
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 50  

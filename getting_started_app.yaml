@@ -25,7 +25,7 @@ metadata:
     app: gettingstarted-todo
   name: gettingstarted-todo
 spec:
-  replicas: 1
+  #replicas: 1
   selector:
     matchLabels:
       app: gettingstarted-todo
@@ -84,5 +84,9 @@ spec:
           - name: gettingstarted-config-app-vol
             mountPath: /app/config
             readOnly: true  
-        resources: {}  
+        resources: 
+          requests:
+            cpu: "250m"
+          limits:
+            cpu: "500m"  
 status: {}      
